@@ -1,7 +1,7 @@
 {
-  "name": "icepops-pets-API",
+  "name": "dragonBal-API",
   "version": "1.0.0",
-  "description": "A fun lil API server having to do with pets",
+  "description": "Creating  new API to Dragon Ball Z",
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",

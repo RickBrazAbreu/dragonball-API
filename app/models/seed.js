@@ -39,3 +39,13 @@ mongoose.connect(db, {
         console.log(error)
         mongoose.connection.close()
     })
+
+
+
+//     //echo "# dragonball-API" >> README.md
+// git init
+// git add README.md
+// git commit -m "first commit"
+// git branch -M main
+// git remote add origin https://github.com/RickBrazAbreu/dragonball-API.git
+// git push -u origin main
