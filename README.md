@@ -167,10 +167,9 @@ Response:
 ```md
 HTTP/1.1 204 No Content
 ```
- ## Pets Routs
 
 
-### Pets routte table
+### Sayan routte table
 Verb	URI Pattern	Controller#Action
 POST	/sign-up	users#signup
 POST	/sign-in	users#signin
