@@ -1,5 +1,5 @@
 {
-  "name": "dragonBal-API",
+  "name": "DragonBall-API-boilerplate",
   "version": "1.0.0",
   "description": "Creating  new API to Dragon Ball Z",
   "main": "server.js",

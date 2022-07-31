@@ -3,8 +3,8 @@ const express = require('express')
 // Passport docs: http://www.passportjs.org/docs/
 const passport = require('passport')
 
-// pull in Mongoose model for pets
-const Pet = require('../models/pet')
+// pull in Mongoose model for sayans
+const Sayan = require('../models/sayan')
 
 // this is a collection of methods that help us detect situations when we need
 // to throw a custom error
@@ -28,47 +28,47 @@ const requireToken = passport.authenticate('bearer', { session: false })
 const router = express.Router()
 
 // INDEX
-// GET /pets
-router.get('/pets', (req, res, next) => {
-	// we want everyone to see the pets, whether they're logged in or not.
+// GET /sayans
+router.get('/sayans', (req, res, next) => {
+	// we want everyone to see the sayans, whether they're logged in or not.
 	// if we wanted to protect these resources, then we can add that middleware back in. and we would place it between the route and the callback function.(second argument)
-	Pet.find()
+	Sayan.find()
 		.populate('owner')
-		.then((pets) => {
-			// `pets` will be an array of Mongoose documents
+		.then((sayans) => {
+			// `sayans` will be an array of Mongoose documents
 			// we want to convert each one to a POJO, so we use `.map` to
 			// apply `.toObject` to each one
-			return pets.map((pet) => pet.toObject())
+			return sayans.map((sayan) => sayan.toObject())
 		})
-		// respond with status 200 and JSON of the pets
-		.then((pets) => res.status(200).json({ pets: pets }))
+		// respond with status 200 and JSON of the sayans
+		.then((sayans) => res.status(200).json({ sayans: sayans }))
 		// if an error occurs, pass it to the handler
 		.catch(next)
 })
 
 // SHOW
-// GET /pets/5a7db6c74d55bc51bdf39793
-router.get('/pets/:id', (req, res, next) => {
+// GET /sayans/5a7db6c74d55bc51bdf39793
+router.get('/sayans/:id', (req, res, next) => {
 	// req.params.id will be set based on the `:id` in the route
-	Pet.findById(req.params.id)
+	Sayan.findById(req.params.id)
 		.populate('owner')
 		.then(handle404)
-		// if `findById` is succesful, respond with 200 and "pet" JSON
-		.then((pet) => res.status(200).json({ pet: pet.toObject() }))
+		// if `findById` is succesful, respond with 200 and "sayan" JSON
+		.then((sayan) => res.status(200).json({ sayan: sayan.toObject() }))
 		// if an error occurs, pass it to the handler
 		.catch(next)
 })
 
 // CREATE
-// POST /pets
-router.post('/pets', requireToken, (req, res, next) => {
-	// set owner of new pet to be current user
-	req.body.pet.owner = req.user.id
+router.post('/sayans', requireToken, (req, res, next) => {
+	// set owner of new sayan to be current user
+	// POST /sayans
+	req.body.sayan.owner = req.user.id
 
-	Pet.create(req.body.pet)
-		// respond to succesful `create` with status 201 and JSON of new "pet"
-		.then((pet) => {
-			res.status(201).json({ pet: pet.toObject() })
+	Sayan.create(req.body.sayan)
+		// respond to succesful `create` with status 201 and JSON of new "sayan"
+		.then((sayan) => {
+			res.status(201).json({ sayan: sayan.toObject() })
 		})
 		// if an error occurs, pass it off to our error handler
 		// the error handler needs the error message and the `res` object so that it
@@ -77,21 +77,21 @@ router.post('/pets', requireToken, (req, res, next) => {
 })
 
 // UPDATE
-// PATCH /pets/5a7db6c74d55bc51bdf39793
-router.patch('/pets/:id', requireToken, removeBlanks, (req, res, next) => {
+// PATCH /sayans/5a7db6c74d55bc51bdf39793
+router.patch('/sayans/:id', requireToken, removeBlanks, (req, res, next) => {
 	// if the client attempts to change the `owner` property by including a new
 	// owner, prevent that by deleting that key/value pair
-	delete req.body.pet.owner
+	delete req.body.sayan.owner
 
-	Pet.findById(req.params.id)
+	Sayan.findById(req.params.id)
 		.then(handle404)
-		.then((pet) => {
+		.then((sayan) => {
 			// pass the `req` object and the Mongoose record to `requireOwnership`
 			// it will throw an error if the current user isn't the owner
-			requireOwnership(req, pet)
+			requireOwnership(req, sayan)
 
 			// pass the result of Mongoose's `.update` to the next `.then`
-			return pet.updateOne(req.body.pet)
+			return sayan.updateOne(req.body.sayan)
 		})
 		// if that succeeded, return 204 and no JSON
 		.then(() => res.sendStatus(204))
@@ -100,15 +100,15 @@ router.patch('/pets/:id', requireToken, removeBlanks, (req, res, next) => {
 })
 
 // DESTROY
-// DELETE /pets/5a7db6c74d55bc51bdf39793
-router.delete('/pets/:id', requireToken, (req, res, next) => {
-	Pet.findById(req.params.id)
+// DELETE /sayans/5a7db6c74d55bc51bdf39793
+router.delete('/sayans/:id', requireToken, (req, res, next) => {
+	Sayan.findById(req.params.id)
 		.then(handle404)
-		.then((pet) => {
-			// throw an error if current user doesn't own `pet`
-			requireOwnership(req, pet)
-			// delete the pet ONLY IF the above didn't throw
-			pet.deleteOne()
+		.then((sayan) => {
+			// throw an error if current user doesn't own `sayan`
+			requireOwnership(req, sayan)
+			// delete the sayan ONLY IF the above didn't throw
+			sayan.deleteOne()
 		})
 		// send back 204 and no content if the deletion succeeded
 		.then(() => res.sendStatus(204))

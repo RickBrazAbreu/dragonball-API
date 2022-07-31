@@ -17,12 +17,12 @@ mongoose.connect(db, {
     .then(() => {
         
         Sayan.deleteMany({ owner: null })
-            .then(deletedSayan => {
-                console.log('deletedSayan', deletedSayan)
+            .then(deletedSayans => {
+                console.log('deletedSayan', deletedSayans)
 
                 Sayan.create(startSayans)
-                    .then(newSayan => {
-                        console.log('the new sayan', newSayan)
+                    .then(newSayans => {
+                        console.log('the new sayan', newSayans)
                         mongoose.connection.close()
                     })
                     .catch(error => {

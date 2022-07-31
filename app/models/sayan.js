@@ -1,7 +1,7 @@
 
 const mongoose = require('mongoose')
 
-const toySchema = require('./weapons')
+const weaponSchema = require('./weapons')
 
 const { Schema, model } = mongoose
 
@@ -19,11 +19,11 @@ const sayanSchema = new Schema(
             type: Number,
             required: true
         },
-        adoptable: {
+        strong: {
             type: Boolean,
             required: true
         },
-        toys: [toySchema],
+        weapons: [weaponSchema],
         owner: {
 			type: Schema.Types.ObjectId,
 			ref: 'User'
@@ -42,7 +42,7 @@ sayanSchema.virtual('fullTitle').get(function () {
     return `${this.name} the ${this.type}`
 })
 
-sayanSchema.virtual('isABaby').get(function () {
+sayanSchema.virtual('isaKid').get(function () {
     if (this.age < 10) {
         return "he is a kid"
     } else if (this.age >= 10 && this.age < 20) {

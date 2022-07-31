@@ -4,8 +4,8 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 
 // require route files
-const petRoutes = require('./app/routes/pet_routes')
-const toyRoutes = require('./app/routes/toy_routes')
+const sayanRoutes = require('./app/routes/sayan_routes')
+const weaponRoutes = require('./app/routes/weapon_routes')
 const exampleRoutes = require('./app/routes/example_routes')
 const userRoutes = require('./app/routes/user_routes')
 
@@ -23,7 +23,7 @@ const auth = require('./lib/auth')
 
 // define server and client ports
 // used for cors and local port declaration
-const serverDevPort = 8000
+const serverDevPort = 8100
 const clientDevPort = 3000
 
 // establish database connection
@@ -67,8 +67,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use(requestLogger)
 
 // register route files
-app.use(petRoutes)
-app.use(toyRoutes)
+app.use(sayanRoutes)
+app.use(weaponRoutes)
 app.use(exampleRoutes)
 app.use(userRoutes)
 
