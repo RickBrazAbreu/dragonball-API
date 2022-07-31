@@ -88,6 +88,7 @@ router.patch('/sayans/:id', requireToken, removeBlanks, (req, res, next) => {
 		.then((sayan) => {
 			// pass the `req` object and the Mongoose record to `requireOwnership`
 			// it will throw an error if the current user isn't the owner
+//AKi exige o OWNER usuario
 			requireOwnership(req, sayan)
 
 			// pass the result of Mongoose's `.update` to the next `.then`
